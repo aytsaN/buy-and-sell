@@ -1,1 +1,14 @@
-<p>edit-listing-page works!</p>
+<div class="content-box">
+  <h2>Edit Listing</h2>
+  @if (listing(); as activeListing) {
+    <bs-listing-data-form
+      buttonText="Save Changes"
+      [currentName]="activeListing.name"
+      [currentDescription]="activeListing.description"
+      [currentPrice]="activeListing.price"
+      (submitListing)="editListing()">
+    </bs-listing-data-form>
+  } @else {
+    <p>Loading listing details...</p>
+  }
+</div>

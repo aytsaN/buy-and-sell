@@ -1,1 +1,17 @@
-<p>my-listings-page works!</p>
+@for (listing of listings(); track listing.id) {
+  <div class="content-box">
+    <h3>{{ listing.name }}</h3>
+    <p>{{ listing.description }}</p>
+    <p>{{ listing.price | currency }}</p>
+    <div class="buttons-container">
+      <a routerLink="/edit-listing/{{ listing.id }}">
+        <button>Edit</button>
+      </a>
+      <button (click)="deleteListing(listing.id)">Delete</button>
+    </div>
+  </div>
+}
+
+<a routerLink="/new-listing">
+  <button>Create New Listing</button>
+</a>

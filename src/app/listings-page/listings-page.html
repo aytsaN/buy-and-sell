@@ -1,1 +1,7 @@
-<p>listings-page works!</p>
+@for (listing of listings(); track listing.id) {
+  <div class="content-box">
+    <a routerLink="/listings/{{ listing.id }}">
+      <h3>{{ listing.name }} - {{ listing.price | currency }}</h3>
+    </a>
+  </div>
+}
