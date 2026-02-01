@@ -8,6 +8,8 @@
 
 # Node
 /node_modules
+/buy-and-sell-frontend/node_modules
+/buy-and-sell-backend/node_modules
 npm-debug.log
 yarn-error.log
 
@@ -30,7 +32,7 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/.angular/cache
+*/.angular/cache
 .sass-cache/
 /connect.lock
 /coverage
