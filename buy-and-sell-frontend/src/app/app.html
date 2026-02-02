@@ -1,8 +1,14 @@
 <div id="page-wrap">
   <div id="max-width-column">
-    <bs-nav-bar></bs-nav-bar>
-    <div id="content-wrap">
-      <router-outlet></router-outlet>
-    </div>
+    @if (user$ | async) {
+      <bs-nav-bar></bs-nav-bar>
+      <div id="content-wrap">
+        <router-outlet></router-outlet>
+      </div>
+      <button (click)="signOut()">Sign Out</button>
+    } @else {
+      <h2>You need to sign first</h2>
+      <button (click)="signIn()">Sign in with Google</button>
+    }
   </div>
 </div>

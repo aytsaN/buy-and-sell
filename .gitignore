@@ -44,3 +44,8 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Secrets
+credentials.json
+environment.ts
+environment.development.ts
