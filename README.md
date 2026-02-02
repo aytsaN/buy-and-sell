@@ -1,6 +1,8 @@
 # BuyAndSell
 
-This is a full-stack application. It uses Node.js for the back-end, Angular for the front-end and MySQL for the database.
+This is a full-stack application.  
+It uses Node.js for the back-end, Angular for the front-end, MySQL for the database and Firebase for authentication.
+
 
 ## BE Development server
 
