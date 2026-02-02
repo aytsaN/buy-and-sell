@@ -1,0 +1,15 @@
+{
+  "plugins": [
+    "prettier-plugin-organize-attributes",
+    "prettier-plugin-organize-attributes",
+    "prettier-plugin-css-order"
+  ],
+  "attributeGroups": [
+    "selector",
+    "standalone",
+    "imports",
+    "templateUrl",
+    "styleUrls"
+  ],
+  "attributeSort": "alphabetical"
+}

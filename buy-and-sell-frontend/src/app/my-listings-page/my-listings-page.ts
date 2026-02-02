@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from "@angular/router";
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 
-import { fakeMyListings } from '../shared/mocks/listings.mock';
+import { Listing } from '../core/models/listing.model';
+import { Listings } from '../core/services/listings';
 
 @Component({
   selector: 'bs-my-listings-page',
@@ -12,9 +14,26 @@ import { fakeMyListings } from '../shared/mocks/listings.mock';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyListingsPage {
-  protected listings = signal(fakeMyListings);
+  private readonly listingService = inject(Listings);
+  private readonly destroyRef = inject(DestroyRef);
+
+  protected listings = signal<Listing[]>([]);
+
+  constructor() {
+    this.listingService
+      .getListingsForUser$()
+      .pipe(takeUntilDestroyed())
+      .subscribe((data) => this.listings.set(data));
+  }
 
   deleteListing(listingId: string | null) {
-    alert(`Deleting your listing with id ${listingId}`);
+    if (!listingId) return;
+
+    this.listingService
+      .deleteListing$(listingId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.listings.update((items) => items.filter((i) => i.id !== listingId));
+      });
   }
 }

@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 
-import { Listing } from '../core/models/listing.model';
-import { fakeListings } from '../shared/mocks/listings.mock';
-import { RouterLink } from "@angular/router";
+import { Listings } from '../core/services/listings';
 
 @Component({
   selector: 'bs-listings-page',
@@ -12,10 +12,8 @@ import { RouterLink } from "@angular/router";
   styleUrl: './listings-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListingsPage implements OnInit {
-  protected listings = signal<Listing[]>([]);
+export class ListingsPage {
+  private readonly listingsService = inject(Listings);
 
-  ngOnInit() {
-    this.listings.set(fakeListings);
-  }
+  protected listings = toSignal(this.listingsService.getListings$());
 }

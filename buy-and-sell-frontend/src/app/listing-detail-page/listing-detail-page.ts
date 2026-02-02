@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { RouterLink } from "@angular/router";
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
+import { tap } from 'rxjs';
 
-import { fakeListings } from '../shared/mocks/listings.mock';
+import { Listings } from '../core/services/listings';
 
 @Component({
   selector: 'bs-listing-detail-page',
@@ -12,7 +14,21 @@ import { fakeListings } from '../shared/mocks/listings.mock';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListingDetailPage {
-  id = input<string>();
+  id = input.required<string>();
 
-  protected listing = computed(() => fakeListings.find(listing => listing.id === this.id()));
+  private readonly listingService = inject(Listings);
+
+  protected listingResource = rxResource({
+    params: () => ({ id: this.id() }),
+    stream: ({ params }) =>
+      this.listingService.getListingById$(params.id).pipe(tap(() => this.updateViews(params.id))),
+  });
+
+  //TODO: unsubscribe
+  private updateViews(id: string) {
+    this.listingService.addViewToListing$(id).subscribe({
+      next: () => console.log('Views updated'),
+      error: (err) => console.error('Failed to update views', err),
+    });
+  }
 }

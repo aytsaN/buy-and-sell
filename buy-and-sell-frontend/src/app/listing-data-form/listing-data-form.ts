@@ -1,6 +1,14 @@
-import { ChangeDetectionStrategy, inject, Component, signal, output,input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  OnInit,
+  output,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Listing } from '../core/models/listing.model';
 
 @Component({
@@ -10,7 +18,7 @@ import { Listing } from '../core/models/listing.model';
   styleUrl: './listing-data-form.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListingDataForm implements OnInit{
+export class ListingDataForm implements OnInit {
   buttonText = input.required<string>();
   currentName = input<string>('');
   currentDescription = input<string>('');
@@ -36,6 +44,7 @@ export class ListingDataForm implements OnInit{
       name: this.name(),
       description: this.description(),
       price: Number(this.price()),
-    })
+      views: 0,
+    });
   }
 }

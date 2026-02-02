@@ -1,21 +1,21 @@
 <form (ngSubmit)="submitting()">
-    <div>
-      <label for="name">
-        Name:
-        <input id="name" name="name" type="text" [(ngModel)]="name" />
-      </label>
-    </div>
-    <div>
-      <label for="description">
-        Description:
-        <input id="description" name="description" type="text" [(ngModel)]="description" />
-      </label>
-    </div>
-    <div>
-      <label for="price">
-        Price:
-        <input id="price" name="price" type="text" [(ngModel)]="price" />
-      </label>
-    </div>
-    <button type="submit">{{ buttonText() }}</button>
-  </form>
+  <div>
+    <label for="name">
+      Name:
+      <input id="name" name="name" type="text" [(ngModel)]="name" />
+    </label>
+  </div>
+  <div>
+    <label for="description">
+      Description:
+      <input id="description" name="description" type="text" [(ngModel)]="description" />
+    </label>
+  </div>
+  <div>
+    <label for="price">
+      Price:
+      <input id="price" name="price" type="number" [(ngModel)]="price" />
+    </label>
+  </div>
+  <button type="submit">{{ buttonText() }}</button>
+</form>

@@ -1,14 +1,17 @@
 <div class="content-box">
   <h2>Edit Listing</h2>
-  @if (listing(); as activeListing) {
+  @if (listingResource.isLoading()) {
+    <div class="spinner">Loading listing...</div>
+  } @else if (listingResource.error()) {
+    <p>Failed to load listing</p>
+  } @else if (listingResource.value(); as activeListing) {
     <bs-listing-data-form
       buttonText="Save Changes"
       [currentName]="activeListing.name"
       [currentDescription]="activeListing.description"
       [currentPrice]="activeListing.price"
-      (submitListing)="editListing()">
+      (submitListing)="editListing($event)"
+    >
     </bs-listing-data-form>
-  } @else {
-    <p>Loading listing details...</p>
   }
 </div>

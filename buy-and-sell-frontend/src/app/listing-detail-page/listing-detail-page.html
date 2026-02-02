@@ -2,12 +2,22 @@
   <a routerLink="/listings">
     <button>Back</button>
   </a>
-  @if (listing(); as listing) {
-    <h2>{{listing.name}}</h2>
-    <p>{{listing.description}}</p>
-    <p>{{listing.price | currency}}</p>
-    <a routerLink="/contact/{{listing.id}}">
+  @if (listingResource.isLoading()) {
+    <div class="spinner">Loading listing...</div>
+  } @else if (listingResource.error()) {
+    <div class="error">
+      <p>Failed to load listing. (Error: {{ listingResource.error()?.message }})</p>
+      <button (click)="listingResource.reload()">Retry</button>
+    </div>
+  } @else if (listingResource.value(); as listing) {
+    <h2>{{ listing.name }}</h2>
+    <p>{{ listing.description }}</p>
+    <p>{{ listing.price | currency }}</p>
+    <a routerLink="/contact/{{ listing.id }}">
       <button>Contact Seller</button>
     </a>
+    <p>
+      <i>This listing has been viewed {{ listing.views }} times.</i>
+    </p>
   }
 </div>
