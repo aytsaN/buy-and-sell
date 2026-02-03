@@ -36,7 +36,6 @@ export class ContactPage {
       });
 
       onCleanup(() => {
-        console.log(`Cleaning up request for ID: ${currentId}`);
         subscription.unsubscribe();
       });
     });

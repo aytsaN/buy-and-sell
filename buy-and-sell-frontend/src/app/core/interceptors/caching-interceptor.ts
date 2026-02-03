@@ -16,14 +16,11 @@ export const cachingInterceptor: HttpInterceptorFn = (req, next) => {
   const cachedResponse = isRefresh ? undefined : cache.get(req.urlWithParams);
 
   if (cachedResponse) {
-    console.log('cachedResponse', cachedResponse);
     return of(cachedResponse);
   }
 
   return next(req).pipe(
     tap((event) => {
-      console.log('event', event);
-      console.log('req.urlWithParams', req.urlWithParams);
       if (event instanceof HttpResponse) {
         cache.put(req.urlWithParams, event);
       }
