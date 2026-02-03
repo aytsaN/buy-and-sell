@@ -8,6 +8,7 @@ import { environment } from '../environments/environment.development';
 import { routes } from './app.routes';
 import { apiInterceptor } from './core/interceptors/api-interceptor';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
+import { cachingInterceptor } from './core/interceptors/caching-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +16,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
-    provideHttpClient(withInterceptors([authInterceptor, apiInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor, apiInterceptor, cachingInterceptor])),
   ],
 };
