@@ -17,20 +17,20 @@ export class Listings {
   private auth = inject(Auth);
 
   getListings$(): Observable<Listing[]> {
-    return this.http.get<Listing[]>('/api/listings', {
+    return this.http.get<Listing[]>('/listings', {
       context: new HttpContext().set(BYPASS_AUTH, true),
     });
   }
 
   getListingById$(id: string): Observable<Listing> {
-    return this.http.get<Listing>(`/api/listings/${id}`, {
+    return this.http.get<Listing>(`/listings/${id}`, {
       context: new HttpContext().set(BYPASS_AUTH, true),
     });
   }
 
   addViewToListing$(id: string): Observable<Listing> {
     return this.http.post<Listing>(
-      `/api/listings/${id}/add-view`,
+      `/listings/${id}/add-view`,
       {
         context: new HttpContext().set(BYPASS_AUTH, true),
       },
@@ -43,25 +43,21 @@ export class Listings {
       user(this.auth).subscribe((user) => {
         if (!user) observer.next([]);
         this.http
-          .get<Listing[]>(`/api/users/${user!.uid}/listings`, httpOptions)
+          .get<Listing[]>(`/users/${user!.uid}/listings`, httpOptions)
           .subscribe((data) => observer.next(data));
       });
     });
   }
 
   deleteListing$<T>(id: string): Observable<T> {
-    return this.http.delete<T>(`/api/listings/${id}`, httpOptions);
+    return this.http.delete<T>(`/listings/${id}`, httpOptions);
   }
 
   createListing$(name: string, description: string, price: number): Observable<Listing> {
-    return this.http.post<Listing>('/api/listings', { name, description, price }, httpOptions);
+    return this.http.post<Listing>('/listings', { name, description, price }, httpOptions);
   }
 
   editListings$(id: string, name: string, description: string, price: number): Observable<Listing> {
-    return this.http.post<Listing>(
-      `/api/listings/${id}`,
-      { name, description, price },
-      httpOptions,
-    );
+    return this.http.post<Listing>(`/listings/${id}`, { name, description, price }, httpOptions);
   }
 }

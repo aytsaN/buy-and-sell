@@ -6,6 +6,7 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 
 import { environment } from '../environments/environment.development';
 import { routes } from './app.routes';
+import { apiInterceptor } from './core/interceptors/api-interceptor';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
@@ -14,6 +15,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor, apiInterceptor])),
   ],
 };
